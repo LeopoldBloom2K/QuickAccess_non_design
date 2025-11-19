@@ -9,6 +9,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etId, etPassword;
@@ -67,26 +72,32 @@ public class LoginActivity extends AppCompatActivity {
         String username = etId.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        new Thread(new Runnable() {
+        // User 객체 생성 및 데이터 설정
+        User user = new User();
+        user.username = username;
+        user.password = password;
+
+        // 서버로 로그인 요청 전송
+        RetrofitClient.getApiService().login(user).enqueue(new Callback<LoginResponse>() {
             @Override
-            public void run() {
-                User user = db.userDao().getUser(username, password);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (user != null) {
-                            if (chkAutoLogin.isChecked()) {
-                                saveLoginDetails(username, password);
-                            }
-                            Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호가 틀렸습니다", Toast.LENGTH_SHORT).show();
-                        }
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // 로그인 성공 처리
+                    if (chkAutoLogin.isChecked()) {
+                        saveLoginDetails(username, password);
                     }
-                });
+                    Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호가 틀렸습니다", Toast.LENGTH_SHORT).show();
+                }
             }
-        }).start();
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "서버 연결 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

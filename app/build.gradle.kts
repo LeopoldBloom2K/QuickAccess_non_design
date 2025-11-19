@@ -2,6 +2,16 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+// Properties 객체 로드
+import java.util.Properties
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties");
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream());
+}
+
+
 android {
     namespace = "com.example.myapp"
     compileSdk = 34
@@ -14,6 +24,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // 3. BuildConfig 변수 생성 (String 타입, 이름: SERVER_URL)
+        // local.properties에서 값을 읽어오되, 없으면 기본값 사용
+        val serverUrl = localProperties.getProperty("flask.server.url") ?: "\"http://10.0.2.2:5000/\""
+        buildConfigField("String", "SERVER_URL", serverUrl)
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -26,19 +45,23 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
 dependencies {
 
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.core:core-ktx:1.3.2")
-    implementation("com.google.android.material:material:1.2.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-    implementation("androidx.room:room-runtime:2.5.0")
-    annotationProcessor("androidx.room:room-compiler:2.5.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("androidx.core:core-ktx:1.17.0")
+    implementation("com.google.android.material:material:1.13.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("androidx.room:room-runtime:2.8.3")
+    annotationProcessor("androidx.room:room-compiler:2.8.3")
+
+    // Retrofit (서버 통신)
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
 
 
     implementation(libs.appcompat)

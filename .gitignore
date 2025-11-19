@@ -58,3 +58,6 @@ Thumbs.db
 
 # Kubernetes configuration file
 .kube/config
+
+# .env
+.env 

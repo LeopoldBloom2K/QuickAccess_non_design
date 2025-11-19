@@ -1,0 +1,8 @@
+1. 로그인 기능 재구성
+room (로컬 DB) -> mongoDB
+
+바로 구현 불가능 중간에 API 호출 필요
+
+-> python flask API 불러오는 기능 추가 후 mongoDB 연결 (Android APP <-> REST API <-> mongoDB atlas)
+
+
