@@ -56,8 +56,6 @@ dependencies {
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
-    implementation("androidx.room:room-runtime:2.8.3")
-    annotationProcessor("androidx.room:room-compiler:2.8.3")
 
     // Retrofit (서버 통신)
     implementation("com.squareup.retrofit2:retrofit:3.0.0")

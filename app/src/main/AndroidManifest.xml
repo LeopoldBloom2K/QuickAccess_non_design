@@ -12,7 +12,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,22 +22,22 @@
 
         <!-- Sign Up Activity -->
         <activity
-            android:name=".SignUpActivity"
+            android:name=".view.SignUpActivity"
             android:exported="false" />
 
         <!-- Login Activity -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".view.LoginActivity"
             android:exported="false" />
 
         <!-- Forgot Password Activity -->
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name=".view.ForgotPasswordActivity"
             android:exported="false" />
 
         <!-- Main Screen Activity -->
         <activity
-            android:name=".MainScreenActivity"
+            android:name=".view.MainScreenActivity"
             android:exported="false" />
 
     </application>

@@ -1,7 +1,9 @@
-package com.example.myapp;
+package com.example.myapp.view;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapp.R;
 
 public class MainScreenActivity extends AppCompatActivity {
 

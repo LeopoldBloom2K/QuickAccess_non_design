@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.example.myapp.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +8,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myapp.R;
+import com.example.myapp.model.data.LoginResponse;
+import com.example.myapp.model.data.User;
+import com.example.myapp.model.remote.RetrofitClient;
+import com.example.myapp.viewmodel.LoginViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etId, etPassword;
     private CheckBox chkAutoLogin;
-    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,15 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         chkAutoLogin = findViewById(R.id.chkAutoLogin);
 
-        db = AppDatabase.getDatabase(this);
+        // 1. ViewModel 인스턴스 생성
+        LoginViewModel viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+        // 2. 로그인 버튼 클릭 시 ViewModel 호출
+        findViewById(R.id.btnLogin).setOnClickListener(v -> {
+            String username = etId.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
+            viewModel.login(username, password);
+        });
 
         loadLoginDetails();
 
@@ -45,6 +58,24 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
             }
+        });
+
+
+        viewModel.getLoginResult().observe(this, response -> {
+            if (response.isSuccess()) {
+                if (chkAutoLogin.isChecked()) {
+                    // 자동 로그인 저장 로직 (SharedPreferences)
+                }
+                startActivity(new Intent(LoginActivity.this, MainScreenActivity.class));
+                finish();
+            } else {
+                Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 4. 에러 관찰 (실패 시)
+        viewModel.getErrorMessage().observe(this, errorMsg -> {
+            Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show();
         });
     }
 

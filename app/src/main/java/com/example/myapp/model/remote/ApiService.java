@@ -1,4 +1,7 @@
-package com.example.myapp;
+package com.example.myapp.model.remote;
+
+import com.example.myapp.model.data.LoginResponse;
+import com.example.myapp.model.data.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

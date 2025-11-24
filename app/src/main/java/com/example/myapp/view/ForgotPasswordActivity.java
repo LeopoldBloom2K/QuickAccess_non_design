@@ -1,10 +1,12 @@
-package com.example.myapp;
+package com.example.myapp.view;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapp.R;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
