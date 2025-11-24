@@ -2,6 +2,7 @@ package com.example.myapp.model.remote;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import com.example.myapp.BuildConfig;
 
 public class RetrofitClient {
     // Flask 서버 주소 (에뮬레이터 사용 시 로컬호스트는 10.0.2.2)

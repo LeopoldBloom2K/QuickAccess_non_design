@@ -3,9 +3,11 @@ package com.example.myapp.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.example.myapp.LoginResponse;
-import com.example.myapp.User;
-import com.example.myapp.repository.UserRepository;
+
+// [수정됨] 올바른 패키지 경로로 변경
+import com.example.myapp.model.data.LoginResponse;
+import com.example.myapp.model.data.User;
+import com.example.myapp.model.repository.UserRepository;
 
 public class LoginViewModel extends ViewModel {
     private UserRepository repository;
